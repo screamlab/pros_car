@@ -42,7 +42,8 @@ setup(
             'arm_writer = pros_car_py.arm_writer:main',
             'cv_bridge = pros_car_py.cv_bridge:main',
             'spot_keyboard = pros_car_py.spot_keyboard:main',
-            'ik = pros_car_py.spot_ik:main'
+            'ik = pros_car_py.spot_ik:main',
+            'biped_keyboard = pros_car_py.biped_keyboard:main'
         ],
     },
 )
