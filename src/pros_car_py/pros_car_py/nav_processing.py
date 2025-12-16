@@ -195,9 +195,9 @@ class Nav2Processing:
             action = "FORWARD"
         elif yolo_target_info[2] == 0.0:
             action = "STOP"
-        elif yolo_target_info[2] > 400.0:
+        elif yolo_target_info[2] > 300.0:
             action = "CLOCKWISE_ROTATION_SLOW"
-        elif yolo_target_info[2] < 100.0:
+        elif yolo_target_info[2] < 40.0:
             action = "COUNTERCLOCKWISE_ROTATION_SLOW"
 
         print(yolo_target_info[2], action)
