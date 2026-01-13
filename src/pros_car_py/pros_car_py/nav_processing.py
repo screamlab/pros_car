@@ -191,24 +191,34 @@ class Nav2Processing:
 
         action = "STOP"
         limit_distance = 0.7
+        if yolo_target_info[2] > 100.0 and yolo_target_info[2] < 300.0:
+            action = "FORWARD"
+        elif yolo_target_info[2] == 0.0:
+            action = "STOP"
+        elif yolo_target_info[2] > 300.0:
+            action = "CLOCKWISE_ROTATION_SLOW"
+        elif yolo_target_info[2] < 40.0:
+            action = "COUNTERCLOCKWISE_ROTATION_SLOW"
 
-        if all(depth > limit_distance for depth in camera_forward_depth):
-            if yolo_target_info[0] == 1:
-                if yolo_target_info[2] > 200.0:
-                    action = "CLOCKWISE_ROTATION_SLOW"
-                elif yolo_target_info[2] < -200.0:
-                    action = "COUNTERCLOCKWISE_ROTATION_SLOW"
-                else:
-                    if yolo_target_info[1] < 0.8:
-                        action = "STOP"
-                    else:
-                        action = "FORWARD_SLOW"
-            else:
-                action = "FORWARD"
-        elif any(depth < limit_distance for depth in camera_left_depth):
-            action = "CLOCKWISE_ROTATION"
-        elif any(depth < limit_distance for depth in camera_right_depth):
-            action = "COUNTERCLOCKWISE_ROTATION"
+        print(yolo_target_info[2], action)
+        # if all(depth > limit_distance for depth in camera_forward_depth):
+        #     if yolo_target_info[0] == 1:
+        #         if yolo_target_info[2] > 200.0:
+        #             action = "CLOCKWISE_ROTATION_SLOW"
+        #         elif yolo_target_info[2] < -200.0:
+        #             action = "COUNTERCLOCKWISE_ROTATION_SLOW"
+        #         else:
+        #             if yolo_target_info[1] < 0.8:
+        #                 action = "STOP"
+        #             else:
+        #                 action = "FORWARD_SLOW"
+        #     else:
+        #         action = "FORWARD"
+        # elif any(depth < limit_distance for depth in camera_left_depth):
+        #     action = "CLOCKWISE_ROTATION"
+        # elif any(depth < limit_distance for depth in camera_right_depth):
+        #     action = "COUNTERCLOCKWISE_ROTATION"
+        # action = "STOP"
         return action
 
     def camera_nav_unity(self):
@@ -250,24 +260,16 @@ class Nav2Processing:
         camera_right_depth = self.filter_negative_one(camera_multi_depth[13:20])
         action = "STOP"
         limit_distance = 10.0
-        print(yolo_target_info[1])
-        if all(depth > limit_distance for depth in camera_forward_depth):
-            if yolo_target_info[0] == 1:
-                if yolo_target_info[2] > 200.0:
-                    action = "CLOCKWISE_ROTATION_SLOW"
-                elif yolo_target_info[2] < -200.0:
-                    action = "COUNTERCLOCKWISE_ROTATION_SLOW"
-                else:
-                    if yolo_target_info[1] < 2.0:
-                        action = "STOP"
-                    else:
-                        action = "FORWARD_SLOW"
-            else:
-                action = "FORWARD"
-        elif any(depth < limit_distance for depth in camera_left_depth):
+        #print(yolo_target_info[1])
+        if yolo_target_info[2] > 400.0:
             action = "CLOCKWISE_ROTATION"
-        elif any(depth < limit_distance for depth in camera_right_depth):
+
+        elif yolo_target_info[2] < 100.0:
             action = "COUNTERCLOCKWISE_ROTATION"
+        else:
+            action = "FORWARD"
+        print(yolo_target_info[2])
+        #action = "STOP"
         return action
 
     def stop_nav(self):

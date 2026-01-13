@@ -153,16 +153,15 @@ class CarController:
             # 發布控制指令
 
             elif mode == "custom_nav":
-                action_key = self.nav_processing.camera_nav_unity()
+                action_key = self.nav_processing.camera_nav()
 
             if self._thread_running == False:
                 action_key = "STOP"
-            print(action_key)
             time.sleep(0.05)
             self.ros_communicator.publish_car_control(
                 action_key, publish_rear=True, publish_front=True
             )
-        
+
         # 收尾動作
         print("[background_task] Navigation stopped.")
 

@@ -57,6 +57,10 @@ if [ -e /dev/usb_robot_arm ]; then
     device_options+=" --device=/dev/usb_robot_arm"
 fi
 
+if [ -e /dev/oradar ]; then
+    device_options+=" --device=/dev/oradar"
+fi
+
 # 根據不同架構選擇適當的 Docker 圖像
 if [ "$ARCH" = "aarch64" ]; then
     echo "Detected architecture: arm64"
